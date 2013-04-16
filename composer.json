@@ -1,0 +1,26 @@
+{
+    "name": "yuriteixeira/workflow-bundle",
+    "description": "Integrates Sebastian Bergaman's workflow component into Symfony 2",
+    "keywords": ["workflow", "bundle", "generator"],
+    "homepage": "https://github.com/yuriteixeira/WorkflowBundle",
+    "type": "workflow-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Yuri Teixeira",
+            "email": "contato@yuriteixeira.com.br",
+            "homepage": "http://yuriteixeira.com.br/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": "~2.1",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "1.2.*"
+    },
+    "autoload": {
+        "psr-0": { "YuriTeixeira\\WorkflowBundle": "" }
+    },
+    "target-dir": "YuriTeixeira/WorkflowBundle"
+}

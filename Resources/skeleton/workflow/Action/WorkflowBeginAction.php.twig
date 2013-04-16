@@ -1,0 +1,36 @@
+<?php
+
+namespace {{ namespace }}\Action;
+
+use YuriTeixeira\WorkflowBundle\Action\AbstractWorkflowAction;
+use {{ namespace }}\WorkflowDefinition;
+use {{ namespace }}\Service\{{ serviceName }};
+
+/**
+ * Workflow Initialization Action.
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class WorkflowBeginAction extends AbstractWorkflowAction
+{
+    /**
+     * Implement here any business logic needed before the other Actions execution
+     *
+     * @return bool TRUE to continue workflow, FALSE to break it's execution
+     */
+    protected function run()
+    {
+        $this->execution->setVariable(WorkflowDefinition::VAR_TRIES_LEFT, 1);
+
+        if (!$this->execution->hasVariable(WorkflowDefinition::VAR_FORCE_PAUSE)) {
+            $this->execution->setVariable(
+                WorkflowDefinition::VAR_FORCE_PAUSE,
+                false
+            );
+        }
+
+        $this->execution->getWorkflowService()->getLogger()->debug($this->__toString());
+
+        return true;
+    }
+}

@@ -1,0 +1,36 @@
+<?php
+
+namespace {{ namespace }}\Tests\Integration\Service;
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+use YuriTeixeira\WorkflowBundle\Tests\AbstractIntegrationTest;
+
+class {{ serviceName }}Test extends AbstractIntegrationTest
+{
+    public function testSomething()
+    {
+        $this->resetLogs();
+
+        $service = $this->getContainer()->get('workflow.{{ workflowShortName }}');
+        $service->startNewWorkflowExecution();
+        $logContents = $this->getLogContents();
+
+        $this->assertContains('WorkflowBeginAction', $logContents);
+        $this->assertContains('DoSomethingAction', $logContents);
+        $this->assertContains('Done Something!!!', $logContents);
+        $this->assertContains('CheckResultAction', $logContents);
+        $this->assertNotContains('WorkflowEndAction', $logContents);
+
+        $app = new Application($this->getContainer()->get('kernel'));
+        $app->setAutoExit(false);
+
+        $input = new ArrayInput(array('command' => 'yuriteixeira:workflow:execute'));
+        $app->run($input);
+
+        $logContents = $this->getLogContents();
+        $this->assertContains('WorkflowEndAction', $logContents);
+    }
+}

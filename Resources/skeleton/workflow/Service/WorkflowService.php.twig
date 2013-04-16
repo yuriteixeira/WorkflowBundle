@@ -1,0 +1,109 @@
+<?php
+
+namespace {{ namespace }}\Service;
+
+use YuriTeixeira\WorkflowBundle\Service\AbstractWorkflowService;
+
+use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
+
+/**
+ * Workflow Service Class
+ */
+class {{ serviceName }} extends AbstractWorkflowService
+{
+    const CONFIG_MAX_TRIES = 'MaxTries';
+    const CONFIG_TRIES_DELAY = 'TriesDelay';
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var \Twig_Environment
+     */
+    protected $twig;
+
+    /**
+     * Workflow Name
+     *
+     * @var string
+     */
+    protected $workflowName = '{{ workflowShortName }}';
+
+    /**
+     * Constructor
+     *
+     * @param string $host
+     * @param string $database
+     * @param string $username
+     * @param string $password
+     * @param EntityManager     $em
+     * @param LoggerInterface   $logger
+     * @param \Twig_Environment $twig
+     */
+    function __construct(
+        $host,
+        $database,
+        $username,
+        $password,
+        LoggerInterface $logger,
+        EntityManager $em,
+        \Twig_Environment $twig
+    )
+    {
+        parent::__construct($host, $database, $username, $password);
+
+        $this->em = $em;
+        $this->logger = $logger;
+        $this->twig = $twig;
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function getEm()
+    {
+        return $this->em;
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+
+    /**
+     * Get Workflow Name
+     *
+     * @return string
+     */
+    public function getWorkflowName()
+    {
+        return $this->workflowName;
+    }
+
+    /**
+     * Something interesting starts here
+     */
+    public function doSomething()
+    {
+        $this->logger->debug('Done Something!!!');
+    }
+}

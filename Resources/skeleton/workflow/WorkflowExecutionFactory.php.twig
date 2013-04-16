@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use YuriTeixeira\WorkflowBundle\AbstractWorkflowExecutionFactory;
+
+/**
+ * Class that defines a factory, to get an execution instance related to this workflow.
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class WorkflowExecutionFactory extends AbstractWorkflowExecutionFactory
+{
+    /**
+     * @param int $executionId
+     *
+     * @return {{ namespace }}\WorkflowExecution
+     */
+    protected function getWorkflowExecution($executionId = null)
+    {
+        return new WorkflowExecution($this->ezcDbHandler, $this->workflowService, $executionId);
+    }
+}

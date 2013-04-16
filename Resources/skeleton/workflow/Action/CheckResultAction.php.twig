@@ -1,0 +1,41 @@
+<?php
+
+namespace {{ namespace }}\Action;
+
+use YuriTeixeira\WorkflowBundle\Action\AbstractWorkflowAction;
+use {{ namespace }}\WorkflowDefinition;
+use {{ namespace }}\Service\{{ serviceName }};
+
+/**
+ * @author Your Name <your-email@your-company.com>
+ */
+class CheckResultAction extends AbstractWorkflowAction
+{
+    /**
+     * @var \YuriTeixeira\WorkflowBundle\Service\AbstractWorkflowService
+     */
+    protected $workflowService;
+
+    /**
+     * Action implementation (do your magic here!).
+     * NOTE: Only an example, do your own business logic to continue flow or pause.
+     *
+     * @return bool TRUE to continue workflow, FALSE to break it's execution
+     */
+    protected function run()
+    {
+        $forcePause = $this->execution->getVariable(WorkflowDefinition::VAR_FORCE_PAUSE);
+
+        // Forced pause! (for test porpouses, probably you should remove this)
+        if ($forcePause) {
+            $this->execution->setVariable(WorkflowDefinition::VAR_FORCE_PAUSE, false);
+            return false;
+        }
+
+        $this->execution->setVariable(WorkflowDefinition::VAR_TRIES_LEFT, 0);
+
+        $this->execution->getWorkflowService()->getLogger()->debug($this->__toString());
+
+        return true;
+    }
+}

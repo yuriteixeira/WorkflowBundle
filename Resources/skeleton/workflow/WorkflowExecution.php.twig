@@ -1,0 +1,21 @@
+<?php
+
+namespace {{ namespace }};
+
+use YuriTeixeira\WorkflowBundle\AbstractWorkflowExecution;
+
+/**
+ * Class that defines specifics for this execution (like needed dependencies).
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class WorkflowExecution extends AbstractWorkflowExecution
+{
+    /**
+     * @return \{{ namespace }}\WorkflowDefinition
+     */
+    protected function getWorkflowDefinitionInstance()
+    {
+        return new WorkflowDefinition();
+    }
+}

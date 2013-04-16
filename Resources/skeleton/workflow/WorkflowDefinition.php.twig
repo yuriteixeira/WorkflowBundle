@@ -1,0 +1,77 @@
+<?php
+
+namespace {{ namespace }};
+
+use YuriTeixeira\WorkflowBundle\AbstractWorkflowDefinition;
+
+/**
+ * Class that defines a workflow for this workflow.
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class WorkflowDefinition extends AbstractWorkflowDefinition
+{
+    const VAR_TRIES_LEFT = 'tries_left';
+    const VAR_MAX_TRIES = 'max_tries';
+    const VAR_FORCE_PAUSE = 'force_pause';
+
+    /**
+     * Returns the workflow name
+     *
+     * @return string
+     */
+    public function getWorkflowName()
+    {
+        return '{{ workflowShortName }}';
+    }
+
+    /**
+     * Defines the entire workflow
+     *
+     * @return \ezcWorkflowNode
+     */
+    protected function define()
+    {
+        $actionsNamespace = __NAMESPACE__ . '\\Action';
+
+        // Action Nodes (Maps a workflow action node to a Action class)
+        $workflowBeginNode = new \ezcWorkflowNodeAction(array('class' => "{$actionsNamespace}\\WorkflowBeginAction"));
+        $doSomethingNode = new \ezcWorkflowNodeAction(array('class' => "{$actionsNamespace}\\DoSomethingAction"));
+        $checkResultNode = new \ezcWorkflowNodeAction(array('class' => "{$actionsNamespace}\\CheckResultAction"));
+        $workflowEndNode = new \ezcWorkflowNodeAction(array('class' => "{$actionsNamespace}\\WorkflowEndAction"));
+
+        // Merge Node
+        $mergeNode = new \ezcWorkflowNodeSimpleMerge();
+
+        // Choice Node
+        $choiceNode = new \ezcWorkflowNodeExclusiveChoice();
+
+        // Flow
+        $this->startNode->addOutNode($workflowBeginNode);
+        $workflowBeginNode->addOutNode($doSomethingNode);
+
+        // NODE: This structure is needed to loop. So, we will run the CheckResultAction until we have tries left
+        // or until we finally get a status that allow workflow to go on
+        $mergeNode->addInNode($doSomethingNode);
+        $mergeNode->addInNode($checkResultNode);
+        $mergeNode->addOutNode($choiceNode);
+
+        $choiceNode->addConditionalOutNode(
+            new \ezcWorkflowConditionVariable(
+                static::VAR_TRIES_LEFT,
+                new \ezcWorkflowConditionIsGreaterThan(0)
+            ),
+            $checkResultNode
+        );
+
+        $choiceNode->addConditionalOutNode(
+            new \ezcWorkflowConditionVariable(
+                static::VAR_TRIES_LEFT,
+                new \ezcWorkflowConditionIsEqual(0)
+            ),
+            $workflowEndNode
+        );
+
+        return $workflowEndNode;
+    }
+}

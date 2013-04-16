@@ -1,0 +1,28 @@
+<?php
+
+namespace {{ namespace }}\Action;
+
+use YuriTeixeira\WorkflowBundle\Action\AbstractWorkflowAction;
+use {{ namespace }}\WorkflowDefinition;
+use {{ namespace }}\Service\{{ serviceName }};
+
+/**
+ * Connects to target sends the order file
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class DoSomethingAction extends AbstractWorkflowAction
+{
+    /**
+     * Action implementation (do your magic here!).
+     * NOTE: Only an example, do your own business logic to continue flow or pause.
+     *
+     * @return bool TRUE to continue workflow, FALSE to break it's execution
+     */
+    protected function run()
+    {
+        $this->execution->getWorkflowService()->doSomething();
+        $this->execution->getWorkflowService()->getLogger()->debug($this->__toString());
+        return true;
+    }
+}

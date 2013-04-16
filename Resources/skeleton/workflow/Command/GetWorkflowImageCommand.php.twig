@@ -1,0 +1,48 @@
+<?php
+
+namespace {{ namespace }}\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use {{ namespace }}\WorkflowDefinition;
+
+/**
+ * Generates an image representing workflow definition
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class GetWorkflowImageCommand extends ContainerAwareCommand
+{
+    protected function configure()
+    {
+        $this
+            ->setName('workflow-{{ workflowSpinalCase }}:generate-workflow-image')
+            ->setDescription('Generates an image representing workflow definition')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln("Generating image...");
+
+        $workflowDefinition = new WorkflowDefinition();
+        $visitor = new \ezcWorkflowVisitorVisualization();
+        $workflowDefinition->accept($visitor);
+
+        try {
+
+            $path = __DIR__ . '/../Resources/doc/{{ workflowSpinalCase }}_workflow_' . date('Ymd_His');
+            file_put_contents($path, $visitor);
+            exec("dot -Tpng {$path} > {$path}.png");
+            unlink($path);
+
+            $output->writeln('Image generated successfully!');
+            $output->writeln("Path: {$path}.png!");
+
+        } catch (\Exception $e) {
+
+            $output->writeln('An error ocurred. Make sure that you have graphviz and its "dot" executable installed.');
+        }
+    }
+}

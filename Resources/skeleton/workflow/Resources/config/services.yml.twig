@@ -1,0 +1,14 @@
+#parameters:
+#    workflow_{{ workflowShortName }}_key: value
+
+services:
+    workflow.{{ workflowShortName }}:
+        class: {{ namespace }}\Service\{{ serviceName }}
+        arguments:
+            - %database_host%
+            - %database_name%
+            - %database_user%
+            - %database_password%
+            - @logger
+            - @doctrine.orm.entity_manager
+            - @twig

@@ -1,0 +1,26 @@
+<?php
+
+namespace {{ namespace }}\Action;
+
+use YuriTeixeira\WorkflowBundle\Action\AbstractWorkflowAction;
+use {{ namespace }}\WorkflowDefinition;
+use {{ namespace }}\Service\{{ serviceName }};
+
+/**
+ * Workflow Finish Action
+ *
+ * @author Your Name <your-email@your-company.com>
+ */
+class WorkflowEndAction extends AbstractWorkflowAction
+{
+    /**
+     * Implement here any business logic needed after all the other Actions execution
+     *
+     * @return bool TRUE to continue workflow, FALSE to break it's execution
+     */
+    protected function run()
+    {
+        $this->execution->getWorkflowService()->getLogger()->debug($this->__toString());
+        return true;
+    }
+}
