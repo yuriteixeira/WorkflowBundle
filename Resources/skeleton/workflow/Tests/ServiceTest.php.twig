@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Tests\Integration\Service;
+namespace {{ workflow_namespace }}\Tests\Integration\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -8,13 +8,13 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 use YuriTeixeira\WorkflowBundle\Tests\AbstractIntegrationTest;
 
-class {{ serviceName }}Test extends AbstractIntegrationTest
+class {{ workflow_service_name }}Test extends AbstractIntegrationTest
 {
     public function testSomething()
     {
         $this->resetLogs();
 
-        $service = $this->getContainer()->get('workflow.{{ workflowShortName }}');
+        $service = $this->getContainer()->get('workflow.{{ workflow_name_snake_case }}');
         $service->startNewWorkflowExecution();
         $logContents = $this->getLogContents();
 

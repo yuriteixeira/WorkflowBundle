@@ -65,7 +65,7 @@ class GenerateWorkflowCommand extends ContainerAwareCommand
         $dialog->writeSection($output, 'Workflow generation');
 
         $generator = $this->getGenerator();
-        $generator->generate($workflowNamespace, $workflowName, $workflowDir, 'annotation');
+        $generator->generate($workflowNamespace, $workflowName, $workflowDir);
 
         $output->writeln('Generating the workflow stub code: <info>OK</info>');
 

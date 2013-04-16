@@ -1,9 +1,9 @@
 #parameters:
-#    workflow_{{ workflowShortName }}_key: value
+#    workflow_{{ workflow_name_snake_case }}_key: value
 
 services:
-    workflow.{{ workflowShortName }}:
-        class: {{ namespace }}\Service\{{ serviceName }}
+    workflow.{{ workflow_name_snake_case }}:
+        class: {{ workflow_namespace }}\Service\{{ workflow_service_name }}
         arguments:
             - %database_host%
             - %database_name%

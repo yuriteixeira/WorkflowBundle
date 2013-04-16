@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Service;
+namespace {{ workflow_namespace }}\Service;
 
 use YuriTeixeira\WorkflowBundle\Service\AbstractWorkflowService;
 
@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Workflow Service Class
  */
-class {{ serviceName }} extends AbstractWorkflowService
+class {{ workflow_service_name }} extends AbstractWorkflowService
 {
     const CONFIG_MAX_TRIES = 'MaxTries';
     const CONFIG_TRIES_DELAY = 'TriesDelay';
@@ -35,7 +35,7 @@ class {{ serviceName }} extends AbstractWorkflowService
      *
      * @var string
      */
-    protected $workflowName = '{{ workflowShortName }}';
+    protected $workflowName = '{{ workflow_name_snake_case }}';
 
     /**
      * Constructor

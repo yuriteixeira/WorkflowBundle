@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ namespace }}\Command;
+namespace {{ workflow_namespace }}\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use {{ namespace }}\WorkflowDefinition;
+use {{ workflow_namespace }}\WorkflowDefinition;
 
 /**
  * Generates an image representing workflow definition
@@ -17,7 +17,7 @@ class GetWorkflowImageCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('workflow-{{ workflowSpinalCase }}:generate-workflow-image')
+            ->setName('workflow-{{ workflow_name_spinal_case }}:generate-workflow-image')
             ->setDescription('Generates an image representing workflow definition')
         ;
     }
@@ -32,7 +32,7 @@ class GetWorkflowImageCommand extends ContainerAwareCommand
 
         try {
 
-            $path = __DIR__ . '/../Resources/doc/{{ workflowSpinalCase }}_workflow_' . date('Ymd_His');
+            $path = __DIR__ . '/../Resources/doc/{{ workflow_name_spinal_case }}_workflow_' . date('Ymd_His');
             file_put_contents($path, $visitor);
             exec("dot -Tpng {$path} > {$path}.png");
             unlink($path);

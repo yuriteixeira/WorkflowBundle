@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * Execute workflows that needs to be resumed
  */
-class ExecuteWorkflowCommand extends ContainerAwareCommand
+class ResumeWorkflowCommand extends ContainerAwareCommand
 {
     /* @var $em \Doctrine\ORM\EntityManager */
     protected $em;
