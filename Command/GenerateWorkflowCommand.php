@@ -14,7 +14,7 @@ use YuriTeixeira\WorkflowBundle\Generator\WorkflowGenerator;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * CLI command that generates a workflowDefinition stub.
+ * CLI command that generates a workflow stub.
  */
 class GenerateWorkflowCommand extends ContainerAwareCommand
 {
@@ -37,7 +37,8 @@ class GenerateWorkflowCommand extends ContainerAwareCommand
             "Note that the workflow namespace must end with \"Workflow\".";
 
         $this
-            ->setName('workflow:generate')
+            ->setName('yuriteixeira:workflow:generate')
+            ->setAliases(array('workflow:generate'))
             ->setDescription('Generates the core structure for a new workflow')
             ->setHelp($help)
             ->setDefinition(array(

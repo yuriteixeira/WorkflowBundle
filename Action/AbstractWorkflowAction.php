@@ -34,6 +34,14 @@ abstract class AbstractWorkflowAction implements \ezcWorkflowServiceObject
         return $className;
     }
 
+    /**
+     * Check requirements to execute workflow and run it
+     *
+     * @param \ezcWorkflowExecution $execution
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function execute(\ezcWorkflowExecution $execution) {
         if (! $execution instanceof AbstractWorkflowExecution) {
             $correctType = '\YuriTeixeira\WorkflowBundle\AbstractWorkflowExecution';
