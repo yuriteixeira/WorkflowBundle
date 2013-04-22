@@ -2,6 +2,8 @@
 
 namespace {{ workflow_namespace }}\Tests\Integration\Service;
 
+use {{ workflow_namespace }}\WorkflowDefinition;
+
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -12,10 +14,13 @@ class {{ workflow_service_name }}Test extends AbstractIntegrationTest
 {
     public function testSomething()
     {
-        $this->resetLogs();
-
         $service = $this->getContainer()->get('workflow.{{ workflow_name_snake_case }}');
-        $service->startNewWorkflowExecution();
+
+        $execution = $service->getWorkflowExecutionFactory()->create();
+        $execution->setVariable(WorkflowDefinition::VAR_CAN_PAUSE, true);
+        $execution->setVariable(WorkflowDefinition::VAR_FORCE_PAUSE, true);
+        $execution->start();
+
         $logContents = $this->getLogContents();
 
         $this->assertContains('WorkflowBeginAction', $logContents);
@@ -27,7 +32,7 @@ class {{ workflow_service_name }}Test extends AbstractIntegrationTest
         $app = new Application($this->getContainer()->get('kernel'));
         $app->setAutoExit(false);
 
-        $input = new ArrayInput(array('command' => 'yuriteixeira:workflow:execute'));
+        $input = new ArrayInput(array('command' => 'yuriteixeira:workflow:resume'));
         $app->run($input);
 
         $logContents = $this->getLogContents();

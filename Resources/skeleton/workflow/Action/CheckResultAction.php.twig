@@ -24,6 +24,8 @@ class CheckResultAction extends AbstractWorkflowAction
      */
     protected function run()
     {
+        $this->execution->getWorkflowService()->getLogger()->debug($this->__toString());
+
         $forcePause = $this->execution->getVariable(WorkflowDefinition::VAR_FORCE_PAUSE);
 
         // Forced pause! (for test porpouses, probably you should remove this)

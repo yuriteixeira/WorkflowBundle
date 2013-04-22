@@ -35,7 +35,15 @@ abstract class AbstractIntegrationTest extends AbstractUnitTest
     protected function resetDatabase()
     {
         $connection = $this->getEntityManager()->getConnection();
-        // TODO: Data truncation here...
+
+        $connection->executeQuery("SET foreign_key_checks = 0;");
+        $connection->executeUpdate('TRUNCATE TABLE execution;');
+        $connection->executeUpdate('TRUNCATE TABLE execution_state;');
+        $connection->executeUpdate('TRUNCATE TABLE node;');
+        $connection->executeUpdate('TRUNCATE TABLE node_connection;');
+        $connection->executeUpdate('TRUNCATE TABLE variable_handler;');
+        $connection->executeUpdate('TRUNCATE TABLE workflow;');
+        $connection->executeQuery("SET foreign_key_checks = 1;");
     }
 
     /**

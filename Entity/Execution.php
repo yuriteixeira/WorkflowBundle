@@ -17,7 +17,7 @@ class Execution
      *
      * @ORM\Column(name="execution_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $executionId;
 
@@ -25,8 +25,6 @@ class Execution
      * @var integer
      *
      * @ORM\Column(name="workflow_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $workflowId;
 
