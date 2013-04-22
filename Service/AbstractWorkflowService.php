@@ -88,7 +88,7 @@ abstract class AbstractWorkflowService
     }
 
     /**
-     * Start a workflow and link it's id to order entity
+     * Start a workflow
      */
     public function startNewWorkflowExecution()
     {

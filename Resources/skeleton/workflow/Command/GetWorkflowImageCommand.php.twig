@@ -32,7 +32,10 @@ class GetWorkflowImageCommand extends ContainerAwareCommand
 
         try {
 
-            $path = __DIR__ . '/../Resources/doc/{{ workflow_name_spinal_case }}_workflow_' . date('Ymd_His');
+            $dir = __DIR__ . '/../Resources/doc/';
+            mkdir($dir);
+
+            $path = $dir . '{{ workflow_name_spinal_case }}_workflow_' . date('Ymd_His');
             file_put_contents($path, $visitor);
             exec("dot -Tpng {$path} > {$path}.png");
             unlink($path);
@@ -42,7 +45,7 @@ class GetWorkflowImageCommand extends ContainerAwareCommand
 
         } catch (\Exception $e) {
 
-            $output->writeln('An error ocurred. Make sure that you have graphviz and its "dot" executable installed.');
+            $output->writeln("An error ocurred. Make sure that directory \"{$dir}\" exists and you have graphviz (with its \"dot\" executable in your \$PATH) installed.");
         }
     }
 }
