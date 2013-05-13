@@ -46,13 +46,23 @@ abstract class AbstractWorkflowExecution extends \ezcWorkflowDatabaseExecution
     /**
      * Overides the default start to attach the workflow definition, save it on database and run execution after all.
      */
-    public function start($parentId = null)
+    public function start($parentId = null, AbstractWorkflowDefinition $workflowDefinition = null)
     {
-        $this->workflow = $this->getWorkflowDefinitionInstance();
+        $this->workflow = $workflowDefinition ?: $this->getWorkflowDefinitionInstance();
         $storage = new \ezcWorkflowDatabaseDefinitionStorage($this->db);
         $storage->save($this->workflow);
 
         return parent::start($parentId);
+    }
+
+    /**
+     * Loads the state of execution
+     *
+     * @param $executionId
+     */
+    public function load($executionId)
+    {
+        $this->loadExecution($executionId);
     }
 
     /**
