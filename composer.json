@@ -15,6 +15,10 @@
     ],
     "require": {
         "php": ">=5.3.0",
+        "zetacomponents/base": "*",
+        "zetacomponents/workflow": "*",
+        "zetacomponents/workflow-database-tiein": "*",
+        "zetacomponents/database": "*",
         "symfony/framework-bundle": "~2.1",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "1.2.*"
